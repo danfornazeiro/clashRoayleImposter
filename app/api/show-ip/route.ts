@@ -5,7 +5,6 @@ export async function GET(req: NextRequest) {
   const ip =
     req.headers.get("x-forwarded-for") ||
     req.headers.get("x-real-ip") ||
-    req.ip ||
     "(não detectado)";
   return NextResponse.json({ ip });
 }
