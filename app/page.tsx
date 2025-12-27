@@ -1,8 +1,6 @@
 "use client";
 import { useState } from "react";
-import { getClashRoyaleWords } from "./utils/clashRoyale";
-import { translateCard } from "./utils/clashRoyaleTranslate";
-import { translateToPortuguese } from "./utils/translateApi";
+import { clashRoyaleCardsPT } from "./utils/clashRoyaleCardsPT";
 import { usePlayersStorage } from "./hooks/usePlayersStorage";
 import { GameScreen, WhoStartsScreen } from "./components/GameScreens";
 
@@ -25,14 +23,10 @@ export default function Home() {
   // ======================
   // Game Logic
   // ======================
-  const startGame = async () => {
+  const startGame = () => {
     setLoading(true);
-    const words = await getClashRoyaleWords();
-    const secretWordEn = words[Math.floor(Math.random() * words.length)];
-    let secretWord = translateCard(secretWordEn);
-    if (secretWord === secretWordEn) {
-      secretWord = await translateToPortuguese(secretWordEn);
-    }
+    const secretWord =
+      clashRoyaleCardsPT[Math.floor(Math.random() * clashRoyaleCardsPT.length)];
     const impostor = players[Math.floor(Math.random() * players.length)];
     const result: Record<string, string> = {};
     players.forEach((p) => {
@@ -88,7 +82,7 @@ export default function Home() {
   // UI — START SCREEN
   // ======================
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-200 to-indigo-300 dark:from-blue-900 dark:to-indigo-950">
+    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-blue-200 to-indigo-300 dark:from-blue-900 dark:to-indigo-950">
       <main className="bg-white dark:bg-zinc-900 rounded-xl p-6 w-full max-w-md shadow-xl">
         <h1 className="text-3xl font-bold text-center mb-4">Clash dos Cria</h1>
 
